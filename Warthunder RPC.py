@@ -19,6 +19,7 @@ start = int(time.time())
 Hanger = False
 TankCheck = False
 GameCheck = False
+WTloaded = False
 while True:
      try:
 
@@ -34,6 +35,7 @@ while True:
          ) 
      
         Hanger = True
+        WTloaded = True
 
         if  MapData["valid"] is True: 
             Hanger = False
@@ -225,10 +227,10 @@ while True:
 
             root = tk.Tk()
             root.withdraw()
-
-            messagebox.showinfo("ERROR", "warthunder localhost didnt start in time rerun again terminating py")
-            RPC.clear()
-            sys.exit(0)
-            
-
-
+            if WTloaded:
+                  RPC.clear()
+                  sys.exit(0)
+            else:
+                  messagebox.showinfo("ERROR", "warthunder localhost didnt start in time rerun again terminating py")
+                  RPC.clear()
+                  sys.exit(0)
