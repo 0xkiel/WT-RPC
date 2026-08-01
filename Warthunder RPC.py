@@ -3,9 +3,6 @@ from pypresence import Presence
 import requests
 import json
 from json import JSONDecodeError
-import socket
-import ctypes
-import sys
 from pypresence.exceptions import DiscordNotFound
 
 MAP_INFO = "http://localhost:8111/map_info.json"
@@ -16,10 +13,10 @@ RPC.connect()
 
 start = int(time.time())
 
-Hanger = False
+Hangar = False
 TankCheck = False
-GameCheck = False
 WTloaded = False
+
 while True:
      try:
 
@@ -29,16 +26,16 @@ while True:
         if MapData["valid"] == False:
            RPC.update(
          large_image = "hanger", 
-         details="In Hanger",
+         details="In Hangar",
          name="WarThunder(WT)",
          start=start,
          ) 
      
-        Hanger = True
-        WTloaded = True
+        Hangar = True
+     
 
         if  MapData["valid"] is True: 
-            Hanger = False
+            Hangar = False
      
         if IndicatorData["valid"] == False:
             TankCheck = True
@@ -46,7 +43,7 @@ while True:
         elif IndicatorData["valid"] != False:
             TankCheck = False
 
-        if TankCheck and Hanger != True:
+        if TankCheck and Hangar != True:
            RPC.update(
              large_image = "hanger", 
              state = "Using: Unknown Aircraft",
@@ -57,7 +54,8 @@ while True:
 
 
         if TankCheck != True:
-               if IndicatorData["type"].startswith("tankModels/cn_") and Hanger is False:
+               WTloaded = True
+               if IndicatorData["type"].startswith("tankModels/cn_") and Hangar is False:
                     tank_name = IndicatorData["type"].replace("tankModels/cn_", "")
                     tank_name = tank_name.upper()
                     RPC.update(
@@ -70,8 +68,9 @@ while True:
                     start=start,
                     )
                     time.sleep(0.01)
+          
 
-               elif IndicatorData["type"].startswith("tankModels/us_") and Hanger is False:
+               elif IndicatorData["type"].startswith("tankModels/us_") and Hangar is False:
                      tank_name = IndicatorData["type"].replace("tankModels/us_", "")
                      tank_name = tank_name.upper().strip()
                      RPC.update(
@@ -85,27 +84,27 @@ while True:
               
                      )
                      time.sleep(0.01)
-
+      
        
 
-               elif IndicatorData["type"].startswith("tankModels/germ_") and Hanger is False:
+               elif IndicatorData["type"].startswith("tankModels/germ_") and Hangar is False:
                      tank_name = IndicatorData["type"].strip().replace("tankModels/germ_", "")
-                     tank_nameA = tank_name.upper()
+                     tank_name = tank_name.upper()
                      RPC.update(
                      large_image = "hanger", 
                      small_image = "ger",
                      small_text= tank_name,
-                     state = f"Using: {tank_nameA}",
+                     state = f"Using: {tank_name}",
                      details="In Battle",
                      name="WarThunder(WT)",
                      start=start,
                      
                      )
                      time.sleep(0.01)
-
+             
        
 
-               elif IndicatorData["type"].startswith("tankModels/ussr_") and Hanger is False:
+               elif IndicatorData["type"].startswith("tankModels/ussr_") and Hangar is False:
                      tank_name = IndicatorData["type"].replace("tankModels/ussr_", "")
                      tank_name = tank_name.upper()
                      RPC.update(
@@ -119,10 +118,10 @@ while True:
                      
                      )
                      time.sleep(0.01)
+       
 
 
-
-               elif IndicatorData["type"].startswith("tankModels/uk_") and Hanger is False:
+               elif IndicatorData["type"].startswith("tankModels/uk_") and Hangar is False:
                      tank_name = IndicatorData["type"].replace("tankModels/uk_", "")
                      tank_name = tank_name.upper()
                      RPC.update(
@@ -136,10 +135,10 @@ while True:
               
                      )
                      time.sleep(0.01)
+                 
 
 
-
-               elif IndicatorData["type"].startswith("tankModels/jp_") and Hanger is False:
+               elif IndicatorData["type"].startswith("tankModels/jp_") and Hangar is False:
                      tank_name = IndicatorData["type"].replace("tankModels/jp_", "")
                      tank_name = tank_name.upper()
                      RPC.update(
@@ -153,9 +152,9 @@ while True:
                      
                      )
                      time.sleep(0.01)
+                  
 
-
-               elif IndicatorData["type"].startswith("tankModels/it_") and Hanger is False:
+               elif IndicatorData["type"].startswith("tankModels/it_") and Hangar is False:
                      tank_name = IndicatorData["type"].replace("tankModels/it_", "")
                      tank_name = tank_name.upper()
                      RPC.update(
@@ -169,9 +168,9 @@ while True:
 
                      )
                      time.sleep(0.01)
-
        
-               elif IndicatorData["type"].startswith("tankModels/fr_") and Hanger is False:
+       
+               elif IndicatorData["type"].startswith("tankModels/fr_") and Hangar is False:
                      tank_name = IndicatorData["type"].replace("tankModels/fr_", "")
                      tank_name = tank_name.upper()
                      RPC.update(
@@ -186,9 +185,9 @@ while True:
                      )
                      time.sleep(0.01)
 
-       
+        
 
-               elif IndicatorData["type"].startswith("tankModels/sw_") and Hanger is False:
+               elif IndicatorData["type"].startswith("tankModels/sw_") and Hangar is False:
                      tank_name = IndicatorData["type"].replace("tankModels/sw_", "")
                      tank_name = tank_name.upper()
                      RPC.update(
@@ -202,8 +201,8 @@ while True:
 
                      )
                      time.sleep(0.01)
-
-               elif IndicatorData["type"].startswith("tankModels/il_") and Hanger is False:
+                  
+               elif IndicatorData["type"].startswith("tankModels/il_") and Hangar is False:
                      tank_name = IndicatorData["type"].replace("tankModels/il_", "")
                      tank_name = tank_name.upper()
                      RPC.update(
@@ -216,21 +215,10 @@ while True:
                      start=start,
                      )
                      time.sleep(0.01)
+               
 
-     except (ValueError, requests.exceptions.JSONDecodeError, requests.exceptions.ReadTimeout, TypeError, JSONDecodeError ):
-
+     except (ValueError, requests.exceptions.JSONDecodeError, requests.exceptions.ReadTimeout, TypeError, JSONDecodeError, requests.exceptions.ConnectionError):
+            RPC.clear()
+            time.sleep(5)
+            start = int(time.time())
             pass
-
-     except requests.exceptions.ConnectionError:
-            import tkinter as tk
-            from tkinter import messagebox
-
-            root = tk.Tk()
-            root.withdraw()
-            if WTloaded:
-                  RPC.clear()
-                  sys.exit(0)
-            else:
-                  messagebox.showinfo("ERROR", "warthunder localhost didnt start in time rerun again terminating py")
-                  RPC.clear()
-                  sys.exit(0)
